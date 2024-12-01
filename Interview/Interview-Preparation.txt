@@ -1,0 +1,152 @@
+1. Git Fetch vs. Git Pull
+Git Fetch:
+Downloads changes from the remote repository but does not merge them into the local repository.
+Allows you to review changes before integrating them.
+Command: git fetch
+
+Git Pull:
+Combines git fetch and git merge in one step.
+Downloads changes from the remote repository and immediately merges them into the current branch.
+Command: git pull
+Best Practice: Use git fetch to review changes before merging, and git pull when you are ready to integrate changes directly
+
+2) git fetch does not merge, but where do they reside will the fetch command keeps under stage ?
+
+When you run git fetch, it downloads the latest changes from the remote repository to your local repository, but it does not merge them into your current branch. Instead, these changes are stored in your local repository's remote-tracking branches.
+
+Remote-Tracking Branches
+Remote-tracking branches are references to the state of branches in your remote repository. They allow you to see what changes have been made in the remote repository without affecting your working directory or current branch.
+
+For example, if you run:
+
+git fetch origin
+Git will update your local copies of the remote branches, such as origin/main, origin/feature-branch, etc.
+
+Viewing Fetched Changes
+To see the changes that have been fetched, you can use:
+
+git log origin/main
+This command shows the commit history of the main branch from the remote repository (origin).
+
+Merging Fetched Changes
+To incorporate the fetched changes into your current branch, you can use git merge or git rebase:
+
+Merge:
+git merge origin/main
+This merges the changes from origin/main into your current branch.
+
+Rebase:
+git rebase origin/main
+This re-applies your local commits on top of the changes from origin/main.
+
+Example Workflow
+Fetch Changes:
+
+git fetch origin
+View Fetched Changes:
+
+git log origin/main
+Merge or Rebase:
+
+git merge origin/main
+or
+
+git rebase origin/main
+By using git fetch, you can keep your local repository up-to-date with the remote repository without immediately integrating the changes, giving you the opportunity to review them first.
+
+
+3) if I use git merge after fetch will it override my changes in local and where as git rebase re-applies my changes on the fetch code ?
+
+differences between git merge and git rebase after fetching changes.
+
+Git Merge
+When you use git merge after fetching changes, it combines the fetched changes from the remote branch into your current branch. Here's how it works:
+
+Fetch Changes:
+git fetch origin
+
+Merge Changes:
+git merge origin/main
+
+What Happens:
+Three-Way Merge: Git performs a three-way merge between the latest commit on your current branch, the latest commit on the remote branch, and their common ancestor.
+Preserves History: The commit history of both branches is preserved. A new merge commit is created to combine the changes.
+Local Changes: Your local changes are not overridden. If there are conflicts between your changes and the fetched changes, Git will prompt you to resolve them.
+Git Rebase
+When you use git rebase after fetching changes, it re-applies your local commits on top of the fetched changes. Here's how it works:
+
+Fetch Changes:
+git fetch origin
+
+Rebase Changes:
+git rebase origin/main
+
+What Happens:
+Re-applies Commits: Git temporarily removes your local commits, applies the fetched changes, and then re-applies your local commits on top of the fetched changes.
+Linear History: The commit history is rewritten to be linear, without merge commits.
+Local Changes: Your local changes are re-applied on top of the fetched changes. If there are conflicts, Git will prompt you to resolve them during the rebase process.
+Summary
+
+Git Merge:
+Combines changes from the remote branch into your current branch.
+Preserves the commit history with a merge commit.
+Does not override your local changes but may require conflict resolution.
+
+Git Rebase:
+Re-applies your local commits on top of the fetched changes.
+Creates a linear commit history without merge commits.
+Does not override your local changes but may require conflict resolution during the rebase.
+Example Workflow
+Fetch Changes:
+
+git fetch origin
+Merge Changes:
+
+git merge origin/main
+or Rebase Changes:
+
+git rebase origin/main
+Both methods have their use cases. Use git merge if you want to preserve the complete history of changes, including merge commits. Use git rebase if you prefer a cleaner, linear history
+
+
+4) What is the purpose of git stash? 
+git stash temporarily saves changes that are not ready to be committed.
+
+5) How do you apply stashed changes? 
+Use the command git stash apply to reapply stashed changes.
+
+6) What is git cherry-pick? 
+git cherry-pick applies changes from a specific commit to the current branch.
+
+7) How do you revert a commit? 
+Use the command git revert <commit-hash> to create a new commit that undoes the changes of a previous commit.
+
+8) What is the difference between git reset and git revert? 
+git reset moves the current branch to a specified commit, potentially discarding changes, while git revert creates a new commit that undoes changes from a previous commit.
+
+9) How do you view the commit history? 
+Use the command git log to view the commit history.
+
+10) What is a commit hash? 
+A commit hash is a unique identifier for a specific commit.
+
+11) How do you create a tag in Git? 
+Use the command git tag <tag-name> to create a tag.
+
+12) What is the purpose of git config? 
+git config sets configuration options for your Git installation.
+
+13) What is the .gitignore file? 
+The .gitignore file specifies which files and directories to ignore in a repository.
+
+14) How do you remove a file from the staging area? 
+Use the command git reset <file> to remove a file from the staging area.
+
+15) What is the difference between git diff and git status? 
+git diff shows changes between commits, working directory, and staging area, while git status shows the state of the working directory and staging area.
+
+16) How do you rename a branch? 
+Use the command git branch -m <new-branch-name> to rename a branch.
+
+17)How do you undo the last commit? 
+Use the command git reset --soft HEAD~1 to undo the last commit while keeping changes in the working directory.
